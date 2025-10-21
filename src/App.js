@@ -2,6 +2,13 @@ import { useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 
+import Logo from "./components/ui/Logo";
+import Search from "./components/ui/Search";
+import Result from "./components/navbar/Result";
+import Box from "./components/main/Box";
+import List from "./components/main/List";
+import Summary from "./components/main/Summary";
+
 const tempMovieData = [
   {
     imdbID: "tt1375666",
@@ -54,15 +61,27 @@ const average = (arr) =>
 
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
-
+  const [watched, setWatched] = useState(tempWatchedData);
   return (
     <>
-      <Navbar movies={movies} />
-      <Main
-        tempWatchedData={tempWatchedData}
-        average={average}
-        movies={movies}
-      />
+      <Navbar>
+        <Logo />
+        <Search />
+        <Result>
+          Found <strong>{movies.length}</strong> results
+        </Result>
+      </Navbar>
+      <Main>
+        <Box>
+          <List movies={movies} listType="catalog" />
+        </Box>
+        <Box>
+          <>
+            <Summary watched={watched} average={average} />
+            <List movies={watched} listType="watched" />
+          </>
+        </Box>
+      </Main>
     </>
   );
 }

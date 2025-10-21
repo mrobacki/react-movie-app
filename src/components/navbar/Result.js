@@ -1,7 +1,3 @@
-export default function Result({ movies }) {
-  return (
-    <p className="num-results">
-      Found <strong>{movies.length}</strong> results
-    </p>
-  );
+export default function Result({ children }) {
+  return <p className="num-results">{children}</p>;
 }
