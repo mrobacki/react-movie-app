@@ -46,6 +46,20 @@ export default function SelectedMovie({
   }
 
   useEffect(() => {
+    function callback(e) {
+      if (e.code === "Escape") {
+        onCloseMovie();
+        console.log("close");
+      }
+    }
+
+    document.addEventListener("keydown", callback);
+    return function () {
+      document.removeEventListener("keydown", callback);
+    };
+  }, [onCloseMovie]);
+
+  useEffect(() => {
     async function selectMovieData() {
       try {
         setLoading(true);
@@ -61,11 +75,15 @@ export default function SelectedMovie({
       }
     }
     selectMovieData();
-  }, [selectedId]);
+  }, [selectedId, apiKey]);
 
   useEffect(() => {
     if (!title) return;
     document.title = `Movie | ${title}`;
+
+    return function () {
+      document.title = "React Movie App";
+    };
   }, [title]);
 
   return (
