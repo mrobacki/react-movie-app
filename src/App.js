@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Main from "./components/Main";
 
@@ -8,6 +8,9 @@ import Result from "./components/navbar/Result";
 import Box from "./components/main/Box";
 import List from "./components/main/List";
 import Summary from "./components/main/Summary";
+import Loader from "./components/ui/Loader";
+import ErrorMessage from "./components/ui/ErrorMessage";
+import SelectedMovie from "./components/main/SelectedMovie";
 
 const tempMovieData = [
   {
@@ -59,27 +62,108 @@ const tempWatchedData = [
 const average = (arr) =>
   arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+const API_KEY = "c75b54b8";
+
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [query, setQuery] = useState("");
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
+
+  function handleSelectedId(id) {
+    setSelectedId((prev) => (prev === id ? null : id));
+  }
+
+  function handleCloseMovie() {
+    setSelectedId(null);
+  }
+
+  function handleAddWatched(movie) {
+    setWatched((watched) => [...watched, movie]);
+  }
+
+  function handleDeleteWatched(id) {
+    setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setLoading(true);
+        setError("");
+
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+        );
+
+        if (!res.ok) throw new Error("Something went wrong!");
+
+        const data = await res.json();
+
+        if (data.Response === "False")
+          throw new Error(data.Error ? data.Error : "Movie not found");
+
+        setMovies(data.Search || []);
+      } catch (err) {
+        const message = err?.message || String(err);
+        console.error(message);
+        setError(message);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (query.length < 3) {
+      setMovies([]);
+      setError("");
+      return;
+    }
+
+    fetchData();
+  }, [query]);
+
   return (
     <>
       <Navbar>
         <Logo />
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <Result>
           Found <strong>{movies.length}</strong> results
         </Result>
       </Navbar>
       <Main>
         <Box>
-          <List movies={movies} listType="catalog" />
+          {loading && <Loader />}
+          {!loading && !error && (
+            <List
+              movies={movies}
+              listType="catalog"
+              onSelectedId={handleSelectedId}
+            />
+          )}
+          {error && <ErrorMessage>{error}</ErrorMessage>}
         </Box>
         <Box>
-          <>
-            <Summary watched={watched} average={average} />
-            <List movies={watched} listType="watched" />
-          </>
+          {selectedId ? (
+            <SelectedMovie
+              selectedId={selectedId}
+              apiKey={API_KEY}
+              onCloseMovie={handleCloseMovie}
+              onAddWatch={handleAddWatched}
+              watched={watched}
+            />
+          ) : (
+            <>
+              <Summary watched={watched} average={average} />
+              <List
+                movies={watched}
+                listType="watched"
+                onDeleteWatched={handleDeleteWatched}
+              />
+            </>
+          )}
         </Box>
       </Main>
     </>
