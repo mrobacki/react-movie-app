@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# 🎬 React Movie App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A web application for searching movies via the **OMDb API**, viewing IMDb ratings, checking movie details, and saving your own ratings and watched list.  
+Built to practice React fundamentals, custom hooks, side-effects, and working with external APIs.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🔗 **Live Demo**
 
-### `npm start`
+👉 https://react-movie-app-beta-five.vercel.app/
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🧰 **Tech Stack**
 
-### `npm test`
+- **React** (Create React App)
+- **CSS**
+- **JavaScript (ES6+)**
+- **OMDb API**
+- **localStorage**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🚀 **Features**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- 🔍 Search movies via OMDb API
+- 🎞 Detailed movie view (poster, year, plot, IMDb rating)
+- ⭐ User ratings (rate movies directly inside the app)
+- 📁 Add/remove movies from “Watched” list (persisted via localStorage)
+- 🔄 Loader while fetching API data
+- ⚠️ Graceful error handling (invalid query, no results, API issues)
+- 🧠 Custom hooks for reusable logic
+- ⛔ API request cancellation using `AbortController`
+- 📱 Fully responsive interface
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📦 **Installation & Running locally**
 
-### `npm run eject`
+### 1. Clone the repo
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+git clone https://github.com/mrobacki/react-movie-app.git
+cd react-movie-app
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 2. Install dependencies
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```bash
+npm install
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 3. Run development server
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+App will start at:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+http://localhost:3000
+```
 
-### Code Splitting
+> **Note:** The OMDb API key is hardcoded for demo purposes.  
+> In production, use `.env` variables.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## 🧠 **What I Learned**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Building reusable **components**
+- Writing and organizing **custom hooks**
+- Managing state with **useState**
+- Using **useEffect** for API calls and side-effects
+- Canceling API requests with **AbortController**
+- Persisting user data with **localStorage**
+- Handling loading/error states cleanly
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## 📁 **Short Project Structure**
 
-### Advanced Configuration
+```
+src/
+  components/
+  hooks/
+  styles/
+  App.js
+  index.js
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 🚧 **Possible Future Improvements**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Add pagination to search results
+- Add dark/light theme toggle
+- Add transitions/animations
+- Integrate user accounts + backend
+- Add recommended movies system
